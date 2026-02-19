@@ -34,6 +34,10 @@ class Settings(BaseSettings):
     # ── Limits ──────────────────────────────────────────────────
     DAILY_FREE_LIMIT: int = 5
 
+    # ── Webhook ────────────────────────────────────────────────
+    WEBHOOK_URL: str | None = None
+    PORT: int = 8080
+
     # ── Helpers ─────────────────────────────────────────────────
     @property
     def admin_ids_list(self) -> list[int]:
