@@ -61,6 +61,13 @@ async def check_and_track_usage(
     user = await get_or_create_user(session, telegram_id)
     today = datetime.date.today()
 
+    # Admins always bypass limits (survives DB reset)
+    if telegram_id in settings.admin_ids_list:
+        user.requests_today += 1
+        user.last_request_date = today
+        await session.commit()
+        return True
+
     # Reset counter on a new calendar day
     if user.last_request_date < today:
         user.requests_today = 0
